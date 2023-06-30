@@ -19,12 +19,30 @@ void ABindVariables::BeginPlay()
 	UE_LOG(Game, Error, TEXT("Actor's name is %s"), *GetName());
 	UE_LOG(Game, Display, TEXT("int %d float %f"), VisibleInstanceOnlyOdd, EditAnywhere);
 	UE_LOG(Game, Warning, TEXT("Actor's velocity is %s"), *GetVelocity().ToString());
+	FTimerHandle handle;
+	GetWorld()->GetTimerManager().SetTimer(handle, this, &ABindVariables::K2_DestroyActor, 2.0f);
 }
 
 // Called every frame
 void ABindVariables::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
 
+void ABindVariables::K2_DestroyActor()
+{
+	FActorSpawnParameters params;
+	params.Owner = this;
+	params.Instigator = nullptr;
+
+	AActor *Actor = GetWorld()->SpawnActor<AActor>(ClassType, FVector(0, 0, 500.0f), FRotator(), params);
+
+	if (nullptr == Actor) 
+	{
+
+		UE_LOG(Game, Error, TEXT("Nothing"));
+	}
+
+	Super::K2_DestroyActor();
 }
 

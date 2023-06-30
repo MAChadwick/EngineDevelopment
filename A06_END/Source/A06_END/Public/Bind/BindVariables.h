@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "GameFramework/Character.h"
 #include "BindVariables.generated.h"
 
 UCLASS()
@@ -62,4 +63,10 @@ public:
 	// Read write in instance only, read in BP only. Type: string
 	UPROPERTY(EditInstanceOnly, Category = "Variable|ReadWrite")
 		FVector EditInstanceOnly;
+
+	void K2_DestroyActor() override;
+
+	// Class reference
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Variable|Class Ref")
+		TSubclassOf<class ACharacter>ClassType;
 };
