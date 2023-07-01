@@ -7,10 +7,11 @@
 ABaseCharacter::ABaseCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 
-	// Gets the mesh of the the character and sets the location relative to the parent class
+
+	// Gets the mesh of the the character and sets the location relative to the parent class (World in this case)
 	GetMesh()->SetRelativeLocation(FVector(0.0f, 0.0f, -90.0f));
 }
 
@@ -19,6 +20,7 @@ void ABaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+
 }
 
 // Called every frame

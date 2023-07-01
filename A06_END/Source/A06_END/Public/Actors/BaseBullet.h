@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+
 #include "BaseBullet.generated.h"
 
 UCLASS()
@@ -14,6 +15,9 @@ class A06_END_API ABaseBullet : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ABaseBullet();
+
+private:
+	float Damage;
 
 protected:
 	// Called when the game starts or when spawned
@@ -33,5 +37,5 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION()
-		void HandleHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+		void HandleHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int OtherBodyIndex, bool FromSweep, const FHitResult& SweepResult);
 };
