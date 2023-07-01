@@ -5,7 +5,11 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/Character.h"
+
+
 #include "BindVariables.generated.h"
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDelegateVariable, AActor*, Object);
 
 UCLASS()
 class A06_END_API ABindVariables : public AActor
@@ -69,4 +73,15 @@ public:
 	// Class reference
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Variable|Class Ref")
 		TSubclassOf<class ACharacter>ClassType;
+
+	// Delegate. Must have both options for it to work right.
+	// Regular Delegate: One person can bind to it
+	// Multicast delegate: Many things can bind to it
+	// Dynamic delegate: A blueprint can bind to it
+	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Variable | Dispatcher")
+		FDelegateVariable OnTest;
+	
+	// Function for the delegate
+	UFUNCTION()
+		void HandleTest(AActor* Object);
 };

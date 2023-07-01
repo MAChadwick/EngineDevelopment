@@ -3,6 +3,9 @@
 
 #include "Bind/BindVariables.h"
 #include "../../A06_END.h"
+#include "GameFramework/Character.h"
+#include "Blueprint/UserWidget.h"
+#include "HUGBase.h"
 
 // Sets default values
 ABindVariables::ABindVariables()
@@ -21,6 +24,11 @@ void ABindVariables::BeginPlay()
 	UE_LOG(Game, Warning, TEXT("Actor's velocity is %s"), *GetVelocity().ToString());
 	FTimerHandle handle;
 	GetWorld()->GetTimerManager().SetTimer(handle, this, &ABindVariables::K2_DestroyActor, 2.0f);
+
+	OnTest.AddDynamic(this, &ABindVariables::HandleTest);
+
+	// Dont do this. Passing in the static class will not let it bind
+	//UUserWidget *test = CreateWidget<UUserWidget>(nullptr, UHUGBase::StaticClass())
 }
 
 // Called every frame
@@ -31,6 +39,8 @@ void ABindVariables::Tick(float DeltaTime)
 
 void ABindVariables::K2_DestroyActor()
 {
+	// Call for delegate
+	OnTest.Broadcast(this);
 	FActorSpawnParameters params;
 	params.Owner = this;
 	params.Instigator = nullptr;
@@ -39,10 +49,22 @@ void ABindVariables::K2_DestroyActor()
 
 	if (nullptr == Actor) 
 	{
-
 		UE_LOG(Game, Error, TEXT("Nothing"));
 	}
 
+	// Casting to different classes
+	ACharacter* Char = Cast<ACharacter>(Actor);
+
+	if (nullptr == Char)
+	{
+		UE_LOG(Game, Error, TEXT("Cast Failed"));
+	}
+
 	Super::K2_DestroyActor();
+}
+
+void ABindVariables::HandleTest(AActor* Object)
+{
+	UE_LOG(Game, Warning, TEXT("In HandleTest"));
 }
 
