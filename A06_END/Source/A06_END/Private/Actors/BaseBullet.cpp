@@ -22,6 +22,8 @@ ABaseBullet::ABaseBullet()
 	Sphere = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Sphere"));
 	Sphere->SetupAttachment(Collision);
 	Sphere->SetCollisionProfileName(TEXT("NoCollision"));
+	Sphere->SetRelativeScale3D(FVector(0.6f, 0.6f, 0.6f));
+	Sphere->SetEnableGravity(false);
 
 	ConstructorHelpers::FObjectFinder<UStaticMesh>MeshAsset(TEXT("StaticMesh'/Engine/BasicShapes/Sphere.Sphere'"));
 	UStaticMesh* Asset = MeshAsset.Object;
@@ -32,10 +34,12 @@ ABaseBullet::ABaseBullet()
 	Collision->SetGenerateOverlapEvents(true);
 	Collision->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	Collision->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
+	Collision->SetEnableGravity(false);
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
 	ProjectileMovement->InitialSpeed = 1800.0f;
 	ProjectileMovement->MaxSpeed = 2000.0f;
+	ProjectileMovement->ProjectileGravityScale = 0.0f;
 
 	// Set Bullet Damage
 	Damage = 1.0f;

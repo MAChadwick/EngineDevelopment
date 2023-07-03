@@ -18,10 +18,13 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class USpringArmComponent* SpringArmComponent;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		class UCameraComponent* CameraComponent;
 public:
 	ABaseCharacter_Player();
 	void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 private:
 	void MoveForwardBackward(float AxisValue);
+	void MoveLeftRight(float AxisValue);
 };

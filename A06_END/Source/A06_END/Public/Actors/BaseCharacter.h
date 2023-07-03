@@ -19,6 +19,10 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	// Child component for rifle
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		class UChildActorComponent* WeaponChildActorComponent;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -26,4 +30,8 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	void CharacterAttack();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		class ABaseRifle* CurrentWeapon;
 };
