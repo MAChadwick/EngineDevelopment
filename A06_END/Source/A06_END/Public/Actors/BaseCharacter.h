@@ -23,6 +23,12 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		class UChildActorComponent* WeaponChildActorComponent;
 
+private:
+	// Helper functions for initializing values
+	void SetupCharacter();
+	
+	void SetupHud();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

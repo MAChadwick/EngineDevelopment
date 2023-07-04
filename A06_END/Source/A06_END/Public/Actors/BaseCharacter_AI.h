@@ -14,6 +14,9 @@ class A06_END_API ABaseCharacter_AI : public ABaseCharacter
 {
 	GENERATED_BODY()
 
+protected:
+	virtual void BeginPlay() override;
+
 public:	
 	// Sets default values for this character's properties
 	ABaseCharacter_AI();

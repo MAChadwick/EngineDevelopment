@@ -33,11 +33,11 @@ void UIronSightsEventGraph::NativeUpdateAnimation(float DeltaSeconds)
 
 		Speed = VelocityLength;
 		Direction = VelocityDirection;
+		
 	}
 }
 
 void UIronSightsEventGraph::PlayAttackAnim()
 {
 	PlaySlotAnimationAsDynamicMontage(AnimSequence, FName("Action"), 0.25f, 0.25f, 1.0f, 1);
-	OnAnimationEnded.Broadcast();
 }

@@ -15,6 +15,13 @@ class A06_END_API UHUGBase : public UUserWidget
 	GENERATED_BODY()
 	
 protected:
-	UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
-	class UPRogressBar* HealthBar;
+	virtual void NativeConstruct() override;
+
+	UPROPERTY(BlueprintReadWrite, meta=(BindWidget))
+		class UProgressBar* HealthBar;
+
+public:
+
+	UFUNCTION()
+		void SetPlayerHealth(float percent);
 };

@@ -43,6 +43,9 @@ public:
 	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Variable | Dispatcher")
 		FOnShotVariable OnShot;
 
+	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Variable | Dispatcher")
+		FOnMontageEndedMCDelegate OnAnimationEnded;
+
 	// Bullet class declaration
 	UPROPERTY(VisibleAnywhere, BlueprintreadOnly)
 		class ABaseBullet* BulletClass;
@@ -53,5 +56,5 @@ public:
 
 	// Function for OnAnimationEnded delegate
 	UFUNCTION()
-		void AnimationEnded();
+		void AnimationEnded(UAnimMontage* montage, bool interrupted);
 };

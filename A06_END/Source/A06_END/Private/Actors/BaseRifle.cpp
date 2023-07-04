@@ -33,7 +33,6 @@ void ABaseRifle::BeginPlay()
 	if (nullptr != Pawn)
 	{
 		ParentPawn = Pawn;
-		UE_LOG(Game, Warning, TEXT("Set ParentPawn"));
 	}
 	else
 	{
@@ -65,8 +64,7 @@ void ABaseRifle::Attack()
 	}
 }
 
-void ABaseRifle::AnimationEnded()
+void ABaseRifle::AnimationEnded(UAnimMontage* montage, bool interrupted)
 {
-	UE_LOG(Game, Warning, TEXT("Animation Ended *** NEEDS TO BE FIXED ***"));
 	Animate = false;
 }

@@ -4,7 +4,10 @@
 #include "Actors/BaseCharacter_Player.h"
 #include "GameFramework/SpringArmcomponent.h"
 #include "Camera/CameraComponent.h"
+#include "HUGBase.h"
 #include <Kismet/KismetMathLibrary.h>
+#include "Components/HealthComponent.h"
+#include "../../A06_END.h"
 
 ABaseCharacter_Player::ABaseCharacter_Player() {
 	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComponent"));
@@ -15,6 +18,15 @@ ABaseCharacter_Player::ABaseCharacter_Player() {
 	CameraComponent->SetupAttachment(SpringArmComponent);
 
 	SpringArmComponent->SetRelativeLocation(FVector(0.0f, 80.f, 90.f));
+
+	Health = CreateDefaultSubobject<UHealthComponent>(TEXT("Health"));
+}
+
+void ABaseCharacter_Player::BeginPlay()
+{
+	Super::BeginPlay();
+
+	SetupHud();
 }
 
 void ABaseCharacter_Player::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
@@ -40,4 +52,21 @@ void ABaseCharacter_Player::MoveLeftRight(float AxisValue)
 {
 	FRotator MakeRotator(0.0f, GetControlRotation().Yaw, 0.0f);
 	AddMovementInput(UKismetMathLibrary::GetRightVector(MakeRotator), AxisValue);
+}
+
+void ABaseCharacter_Player::SetupHud()
+{
+	APlayerController* playerController = Cast<APlayerController>(GetController());
+
+	if (nullptr != playerController)
+	{
+		UHUGBase* newHud = CreateWidget<UHUGBase>(playerController);
+		newHud->AddToViewport();
+
+		Health->OnDamage.AddDynamic(newHud, &UHUGBase::SetPlayerHealth);
+		Health->OnDeath.AddDynamic(newHud, &UHUGBase::SetPlayerHealth);
+	}
+	else
+		UE_LOG(Game, Error, TEXT("Could not cast to APlayer Controller | BaseChaaracter.cpp, SetupHud"));
+
 }

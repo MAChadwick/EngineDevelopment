@@ -9,9 +9,6 @@
 /**
  * 
  */
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FAnimationEndVariable);
-
 UCLASS()
 class A06_END_API UIronSightsEventGraph : public UAnimInstance
 {
@@ -33,8 +30,4 @@ protected:
 public:
 	UFUNCTION()
 		void PlayAttackAnim();
-
-	// Delegate variable
-	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Variable | Dispatcher")
-		FAnimationEndVariable OnAnimationEnded;
 };

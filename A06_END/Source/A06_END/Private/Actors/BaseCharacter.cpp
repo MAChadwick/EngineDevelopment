@@ -6,19 +6,28 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Actors/BaseRifle.h"
 #include "Core/IronSightsEventGraph.h"
+#include "GameFramework/PlayerController.h"
 #include "../../A06_END.h"
-
 // Sets default values
 ABaseCharacter::ABaseCharacter()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
+	WeaponChildActorComponent = CreateDefaultSubobject<UChildActorComponent>(TEXT("WeaponChildActorComponent"));
+
+	USkeletalMeshComponent* SkeleMesh = GetMesh();
+
+	ConstructorHelpers::FObjectFinder<USkeletalMesh>MeshAsset(TEXT("SkeletalMesh'/Game/END_Starter/Mannequin/SK_Mannequin.SK_Mannequin'"));
+	USkeletalMesh* Asset = MeshAsset.Object;
+
+	SkeleMesh->SetSkeletalMesh(Asset);
+
+	WeaponChildActorComponent->SetupAttachment(SkeleMesh);
+
 	// Gets the mesh of the the character and sets the location relative to the parent class (World in this case)
 	GetMesh()->SetRelativeLocation(FVector(0.0f, 0.0f, -90.0f));
 	GetMesh()->SetRelativeRotation(FRotator(0, -90.0f, 0));
-
-	WeaponChildActorComponent = CreateDefaultSubobject<UChildActorComponent>(TEXT("WeaponChildActorComponent"));
 }
 
 // Called when the game starts or when spawned
@@ -26,6 +35,30 @@ void ABaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();	
 
+	SetupCharacter();
+	
+}
+
+// Called every frame
+void ABaseCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+}
+
+// Called to bind functionality to input
+void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+}
+
+void ABaseCharacter::CharacterAttack() 
+{
+	CurrentWeapon->Attack();
+}
+
+void ABaseCharacter::SetupCharacter()
+{
 	// Get the skeleton mesh from pawn
 	USkeletalMeshComponent* SkeleMesh = GetMesh();
 
@@ -51,31 +84,12 @@ void ABaseCharacter::BeginPlay()
 		{
 			// Bind Play Animation function to OnShot from weapon
 			CurrentWeapon->OnShot.AddDynamic(Animation, &UIronSightsEventGraph::PlayAttackAnim);
-			Animation->OnAnimationEnded.AddDynamic(CurrentWeapon, &ABaseRifle::AnimationEnded);
+			Animation->OnMontageEnded.AddDynamic(CurrentWeapon, &ABaseRifle::AnimationEnded);
 		}
 		else
 			UE_LOG(Game, Error, TEXT("Could not cast to UIronSightsAnimation | BaseCharacter, BeginPlay()"));
 	}
 	else
 		UE_LOG(Game, Error, TEXT("Could not cast to ABaseRifle | BaseCharacter, BeginPlay()"));
-	
-}
-
-// Called every frame
-void ABaseCharacter::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-}
-
-// Called to bind functionality to input
-void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-}
-
-void ABaseCharacter::CharacterAttack() 
-{
-	CurrentWeapon->Attack();
 }
 
