@@ -23,11 +23,12 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		class UChildActorComponent* WeaponChildActorComponent;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		class ABaseRifle* CurrentWeapon;
+
 private:
 	// Helper functions for initializing values
 	void SetupCharacter();
-	
-	void SetupHud();
 
 public:	
 	// Called every frame
@@ -36,8 +37,8 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	void CharacterAttack();
+	UFUNCTION()
+		void CharacterAttack();
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		class ABaseRifle* CurrentWeapon;
+
 };

@@ -2,7 +2,6 @@
 
 
 #include "Actors/BaseCharacter_AI.h"
-#include "Components/SkeletalMeshComponent.h"
 
 ABaseCharacter_AI::ABaseCharacter_AI()
 {

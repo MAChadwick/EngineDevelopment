@@ -22,11 +22,12 @@ ABaseBullet::ABaseBullet()
 	Sphere = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Sphere"));
 	Sphere->SetupAttachment(Collision);
 	Sphere->SetCollisionProfileName(TEXT("NoCollision"));
-	Sphere->SetRelativeScale3D(FVector(0.6f, 0.6f, 0.6f));
-	Sphere->SetEnableGravity(false);
+	Sphere->SetRelativeScale3D(FVector(0.5f, 0.5f, 0.5f));
 
 	ConstructorHelpers::FObjectFinder<UStaticMesh>MeshAsset(TEXT("StaticMesh'/Engine/BasicShapes/Sphere.Sphere'"));
+	ConstructorHelpers::FObjectFinder<UMaterial>MaterialAsset(TEXT("Material'/Game/Art/M_FlatColor.M_FlatColor'"));
 	UStaticMesh* Asset = MeshAsset.Object;
+	Asset->SetMaterial(0, MaterialAsset.Object);
 
 	Sphere->SetStaticMesh(Asset);
 
@@ -34,7 +35,7 @@ ABaseBullet::ABaseBullet()
 	Collision->SetGenerateOverlapEvents(true);
 	Collision->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	Collision->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
-	Collision->SetEnableGravity(false);
+	Collision->SetRelativeScale3D(FVector(0.25f, 0.25f, 0.25f));
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
 	ProjectileMovement->InitialSpeed = 1800.0f;
@@ -68,7 +69,6 @@ void ABaseBullet::Tick(float DeltaTime)
 void ABaseBullet::HandleHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,
 							UPrimitiveComponent* OtherComp, int OtherBodyIndex, bool FromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(Game, Warning, TEXT("Hit"));
 	UGameplayStatics::ApplyDamage(OtherActor, Damage, this->GetInstigatorController(), this, UDamageType::StaticClass());
 	K2_DestroyActor();
 }

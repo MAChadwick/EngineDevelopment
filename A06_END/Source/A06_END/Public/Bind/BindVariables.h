@@ -84,4 +84,11 @@ public:
 	// Function for the delegate
 	UFUNCTION()
 		void HandleTest(AActor* Object);
+
+	// Array
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Variable | Array")
+		TArray<int32> ValueArray;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Variable | Array")
+		TArray<UObject*> ObjectArray;
 };

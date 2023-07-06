@@ -19,6 +19,9 @@ public:
 
 protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		FTimerHandle AnimateTimerHandle;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		float Speed;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
@@ -28,6 +31,7 @@ protected:
 		UAnimSequence* AnimSequence;
 
 public:
-	UFUNCTION()
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 		void PlayAttackAnim();
+	virtual void PlayAttackAnim_Implementation();
 };

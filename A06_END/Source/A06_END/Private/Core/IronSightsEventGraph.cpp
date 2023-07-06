@@ -37,7 +37,7 @@ void UIronSightsEventGraph::NativeUpdateAnimation(float DeltaSeconds)
 	}
 }
 
-void UIronSightsEventGraph::PlayAttackAnim()
+void UIronSightsEventGraph::PlayAttackAnim_Implementation()
 {
 	PlaySlotAnimationAsDynamicMontage(AnimSequence, FName("Action"), 0.25f, 0.25f, 1.0f, 1);
 }

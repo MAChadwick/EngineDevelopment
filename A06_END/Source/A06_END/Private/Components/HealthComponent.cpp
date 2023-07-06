@@ -2,7 +2,6 @@
 
 
 #include "Components/HealthComponent.h"
-#include "../../A06_END.h"
 
 // Sets default values for this component's properties
 UHealthComponent::UHealthComponent()
@@ -40,8 +39,6 @@ void UHealthComponent::HandleDamage(AActor* damagedActor, float damage, const UD
 {
 	currentHealth -= damage;
 	currentHealth = FMath::Clamp(currentHealth, 0.0f, maxHealth);
-
-	UE_LOG(Game, Warning, TEXT("%f"), currentHealth);
 
 	if (currentHealth > 0)
 	{

@@ -13,6 +13,7 @@ ABaseCharacter_Player::ABaseCharacter_Player() {
 	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComponent"));
 	SpringArmComponent->SetupAttachment(GetRootComponent());
 	SpringArmComponent->bUsePawnControlRotation = true;
+	SpringArmComponent->TargetArmLength = 300.0f;
 
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("Camer"));
 	CameraComponent->SetupAttachment(SpringArmComponent);
@@ -60,11 +61,17 @@ void ABaseCharacter_Player::SetupHud()
 
 	if (nullptr != playerController)
 	{
-		UHUGBase* newHud = CreateWidget<UHUGBase>(playerController);
-		newHud->AddToViewport();
+		FStringClassReference WidgetReference(TEXT("/Game/Core/Widgets/WBP_HUD.WBP_HUD_C"));
+		if (UClass* WidgetClass = WidgetReference.TryLoadClass<UUserWidget>())
+		{
+			UHUGBase* NewHud = CreateWidget<UHUGBase>(playerController, WidgetClass);
+			NewHud->AddToViewport();
 
-		Health->OnDamage.AddDynamic(newHud, &UHUGBase::SetPlayerHealth);
-		Health->OnDeath.AddDynamic(newHud, &UHUGBase::SetPlayerHealth);
+			Health->OnDamage.AddDynamic(NewHud, &UHUGBase::SetPlayerHealth);
+			Health->OnDeath.AddDynamic(NewHud, &UHUGBase::SetPlayerHealth);
+		}
+		else
+			UE_LOG(Game, Error, TEXT("Could not load widget BP"));
 	}
 	else
 		UE_LOG(Game, Error, TEXT("Could not cast to APlayer Controller | BaseChaaracter.cpp, SetupHud"));

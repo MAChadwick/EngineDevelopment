@@ -8,6 +8,7 @@
 #include "Core/IronSightsEventGraph.h"
 #include "GameFramework/PlayerController.h"
 #include "../../A06_END.h"
+
 // Sets default values
 ABaseCharacter::ABaseCharacter()
 {
@@ -49,7 +50,6 @@ void ABaseCharacter::Tick(float DeltaTime)
 void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 }
 
 void ABaseCharacter::CharacterAttack() 
@@ -64,7 +64,7 @@ void ABaseCharacter::SetupCharacter()
 
 	// Set the child actor class
 	WeaponChildActorComponent->SetChildActorClass(ABaseRifle::StaticClass());
-	WeaponChildActorComponent->AttachTo(SkeleMesh, FName("WeaponPlacement"));
+	WeaponChildActorComponent->AttachToComponent(SkeleMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName("WeaponPlacement"));
 
 	// Cast to BaseRifle
 	AActor* ChildActor = WeaponChildActorComponent->GetChildActor();
@@ -83,7 +83,7 @@ void ABaseCharacter::SetupCharacter()
 		if (nullptr != Animation)
 		{
 			// Bind Play Animation function to OnShot from weapon
-			CurrentWeapon->OnShot.AddDynamic(Animation, &UIronSightsEventGraph::PlayAttackAnim);
+			CurrentWeapon->OnShot.AddDynamic(Animation, &UIronSightsEventGraph::PlayAttackAnim_Implementation);
 			Animation->OnMontageEnded.AddDynamic(CurrentWeapon, &ABaseRifle::AnimationEnded);
 		}
 		else
