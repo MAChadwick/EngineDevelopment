@@ -19,6 +19,8 @@ ABaseRifle::ABaseRifle()
 	USkeletalMesh* Asset = MeshAsset.Object;
 
 	SkeletalMesh->SetSkeletalMesh(Asset);
+
+	IsDead = false;
 }
 
 // Called when the game starts or when spawned
@@ -48,7 +50,7 @@ void ABaseRifle::Tick(float DeltaTime)
 
 void ABaseRifle::Attack()
 {
-	if (!Animate)
+	if (!Animate && !IsDead)
 	{
 		Animate = true;
 		FVector SpawnLocation = SkeletalMesh->GetSocketLocation(FName("MuzzleFlashSocket"));
@@ -63,7 +65,12 @@ void ABaseRifle::Attack()
 	}
 }
 
-void ABaseRifle::AnimationEnded(UAnimMontage* montage, bool interrupted)
+void ABaseRifle::AnimationEnded()
 {
 	Animate = false;
+}
+
+void ABaseRifle::OwnerDied()
+{
+	IsDead = true;
 }

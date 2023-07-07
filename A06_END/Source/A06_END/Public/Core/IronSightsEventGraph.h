@@ -9,12 +9,18 @@
 /**
  * 
  */
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAttackAnimationEnded);
+
 UCLASS()
 class A06_END_API UIronSightsEventGraph : public UAnimInstance
 {
 	GENERATED_BODY()
+
+private:
+	FTimerHandle AttackTimerHandle;
+
 public:
-	UIronSightsEventGraph();
 	void NativeUpdateAnimation(float deltaSeconds) override;
 
 protected:
@@ -27,11 +33,31 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		float Direction;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+		class UAnimSequence* AttackAnim;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+		class UAnimSequence* HurtAnim;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+		TArray<class UAnimSequence*> DeathAnims;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		UAnimSequence* AnimSequence;
+		UAnimSequence* CurrentDeath;
 
 public:
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	UPROPERTY(VisibleAnywhere, BlueprintAssignable)
+		FOnAttackAnimationEnded OnAttackAnimationEnded;
+
+	UFUNCTION(BlueprintCallable)
 		void PlayAttackAnim();
-	virtual void PlayAttackAnim_Implementation();
+
+	UFUNCTION(BlueprintCallable)
+		void PlayHurtAnim(float Percent);
+
+	UFUNCTION(BlueprintCallable)
+		void PlayDeathAnim(float Percent);
+
+	UFUNCTION()
+		void AttackAnimationEnded();
 };

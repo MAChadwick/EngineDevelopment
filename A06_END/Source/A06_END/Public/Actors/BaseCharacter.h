@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Core/IronSightsEventGraph.h"
+#include "Components/HealthComponent.h"
 #include "BaseCharacter.generated.h"
 
 UCLASS(Abstract)
@@ -26,6 +28,12 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		class ABaseRifle* CurrentWeapon;
 
+	UPROPERTY()
+		UIronSightsEventGraph* Animation;
+
+	UPROPERTY()
+		UHealthComponent* Health;
+
 private:
 	// Helper functions for initializing values
 	void SetupCharacter();
@@ -40,5 +48,6 @@ public:
 	UFUNCTION()
 		void CharacterAttack();
 
-
+	UFUNCTION()
+		virtual void CharacterDeath(float Percent);
 };

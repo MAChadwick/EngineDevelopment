@@ -21,6 +21,8 @@ protected:
 		class UProgressBar* HealthBar;
 
 public:
+	UHUGBase(const FObjectInitializer& ObjectInitializer);
+	bool Initialize() override;
 
 	UFUNCTION()
 		void SetPlayerHealth(float percent);

@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Actors/BaseCharacter.h"
-#include "Components/HealthComponent.h"
 #include "BaseCharacter_Player.generated.h"
 
 /**
@@ -26,14 +25,15 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		class UCameraComponent* CameraComponent;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 		class UHUGBase* HudWidget;
 
-	UPROPERTY()
-		UHealthComponent* Health;
 public:
 	ABaseCharacter_Player();
 	void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	
+	virtual void CharacterDeath(float Percent) override;
 
 private:
 	void MoveForwardBackward(float AxisValue);

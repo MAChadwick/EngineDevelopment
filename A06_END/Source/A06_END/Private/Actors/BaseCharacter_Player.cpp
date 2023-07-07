@@ -6,7 +6,6 @@
 #include "Camera/CameraComponent.h"
 #include "HUGBase.h"
 #include <Kismet/KismetMathLibrary.h>
-#include "Components/HealthComponent.h"
 #include "../../A06_END.h"
 
 ABaseCharacter_Player::ABaseCharacter_Player() {
@@ -19,8 +18,6 @@ ABaseCharacter_Player::ABaseCharacter_Player() {
 	CameraComponent->SetupAttachment(SpringArmComponent);
 
 	SpringArmComponent->SetRelativeLocation(FVector(0.0f, 80.f, 90.f));
-
-	Health = CreateDefaultSubobject<UHealthComponent>(TEXT("Health"));
 }
 
 void ABaseCharacter_Player::BeginPlay()
@@ -61,19 +58,25 @@ void ABaseCharacter_Player::SetupHud()
 
 	if (nullptr != playerController)
 	{
-		FStringClassReference WidgetReference(TEXT("/Game/Core/Widgets/WBP_HUD.WBP_HUD_C"));
-		if (UClass* WidgetClass = WidgetReference.TryLoadClass<UUserWidget>())
-		{
-			UHUGBase* NewHud = CreateWidget<UHUGBase>(playerController, WidgetClass);
-			NewHud->AddToViewport();
+		//UHUGBase* NewHud = CreateWidget<UHUGBase>(playerController, WidgetClass);
+		HudWidget->AddToViewport();
 
-			Health->OnDamage.AddDynamic(NewHud, &UHUGBase::SetPlayerHealth);
-			Health->OnDeath.AddDynamic(NewHud, &UHUGBase::SetPlayerHealth);
-		}
-		else
-			UE_LOG(Game, Error, TEXT("Could not load widget BP"));
+		Health->OnDamage.AddDynamic(HudWidget, &UHUGBase::SetPlayerHealth);
+		Health->OnDeath.AddDynamic(HudWidget, &UHUGBase::SetPlayerHealth);
 	}
 	else
 		UE_LOG(Game, Error, TEXT("Could not cast to APlayer Controller | BaseChaaracter.cpp, SetupHud"));
 
+}
+void ABaseCharacter_Player::CharacterDeath(float Percent)
+{
+	Super::CharacterDeath(0);
+
+	APlayerController* PlayerController = Cast<APlayerController>(GetController());
+
+	if (nullptr != PlayerController) DisableInput(PlayerController);
+
+	SetActorEnableCollision(false);
+
+	HudWidget->RemoveFromParent();
 }

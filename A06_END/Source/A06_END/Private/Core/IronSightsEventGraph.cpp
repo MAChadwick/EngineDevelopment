@@ -7,12 +7,7 @@
 #include "../../A06_END.h"
 #include "GameFramework/Pawn.h"
 
-UIronSightsEventGraph::UIronSightsEventGraph()
-{
-	ConstructorHelpers::FObjectFinder<UAnimSequence>Sequence(TEXT("AnimSequence'/Game/END_Starter/Mannequin/A_Fire_Ironsights.A_Fire_Ironsights'"));
 
-	AnimSequence = Sequence.Object;
-}
 void UIronSightsEventGraph::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);
@@ -21,7 +16,7 @@ void UIronSightsEventGraph::NativeUpdateAnimation(float DeltaSeconds)
 
 	if (nullptr == Owner)
 	{
-		UE_LOG(Game, Error, TEXT("Didn't get owner pawn | IronSightsAnimation.cpp, NativeUpdateAnimation"));
+		//UE_LOG(Game, Error, TEXT("Didn't get owner pawn | IronSightsAnimation.cpp, NativeUpdateAnimation"));
 	}
 	else
 	{
@@ -37,7 +32,25 @@ void UIronSightsEventGraph::NativeUpdateAnimation(float DeltaSeconds)
 	}
 }
 
-void UIronSightsEventGraph::PlayAttackAnim_Implementation()
+void UIronSightsEventGraph::PlayAttackAnim()
 {
-	PlaySlotAnimationAsDynamicMontage(AnimSequence, FName("Action"), 0.25f, 0.25f, 1.0f, 1);
+	PlaySlotAnimationAsDynamicMontage(AttackAnim, FName("Action"), 0.25f, 0.25f, 1.0f, 1);
+
+	GetWorld()->GetTimerManager().SetTimer(AttackTimerHandle, this, &UIronSightsEventGraph::AttackAnimationEnded, AttackAnim->GetPlayLength());
+}
+
+void UIronSightsEventGraph::PlayHurtAnim(float Percent)
+{
+	PlaySlotAnimationAsDynamicMontage(HurtAnim, FName("Action"), 0.25f, 0.25f, 1.0f, 1);
+}
+
+void UIronSightsEventGraph::PlayDeathAnim(float Percent)
+{
+	CurrentDeath = DeathAnims[FMath::RandRange(0, DeathAnims.Num() - 1)];
+	PlaySlotAnimationAsDynamicMontage(CurrentDeath, FName("Action"), 0.25f, 0.25f, 1.0f, 1);
+}
+
+void UIronSightsEventGraph::AttackAnimationEnded()
+{
+	OnAttackAnimationEnded.Broadcast();
 }

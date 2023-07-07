@@ -7,6 +7,7 @@
 #include "Actors/BaseRifle.h"
 #include "Core/IronSightsEventGraph.h"
 #include "GameFramework/PlayerController.h"
+#include "Components/HealthComponent.h"
 #include "../../A06_END.h"
 
 // Sets default values
@@ -19,16 +20,13 @@ ABaseCharacter::ABaseCharacter()
 
 	USkeletalMeshComponent* SkeleMesh = GetMesh();
 
-	ConstructorHelpers::FObjectFinder<USkeletalMesh>MeshAsset(TEXT("SkeletalMesh'/Game/END_Starter/Mannequin/SK_Mannequin.SK_Mannequin'"));
-	USkeletalMesh* Asset = MeshAsset.Object;
-
-	SkeleMesh->SetSkeletalMesh(Asset);
-
 	WeaponChildActorComponent->SetupAttachment(SkeleMesh);
 
 	// Gets the mesh of the the character and sets the location relative to the parent class (World in this case)
 	GetMesh()->SetRelativeLocation(FVector(0.0f, 0.0f, -90.0f));
 	GetMesh()->SetRelativeRotation(FRotator(0, -90.0f, 0));
+
+	Health = CreateDefaultSubobject<UHealthComponent>(TEXT("Health"));
 }
 
 // Called when the game starts or when spawned
@@ -77,19 +75,31 @@ void ABaseCharacter::SetupCharacter()
 
 		UAnimInstance* AnimInstance = SkeleMesh->GetAnimInstance();
 
-		UIronSightsEventGraph* Animation = Cast<UIronSightsEventGraph>(AnimInstance);
+		Animation = Cast<UIronSightsEventGraph>(AnimInstance);
 
 		// Check if cast was successful
 		if (nullptr != Animation)
 		{
 			// Bind Play Animation function to OnShot from weapon
-			CurrentWeapon->OnShot.AddDynamic(Animation, &UIronSightsEventGraph::PlayAttackAnim_Implementation);
-			Animation->OnMontageEnded.AddDynamic(CurrentWeapon, &ABaseRifle::AnimationEnded);
+			CurrentWeapon->OnShot.AddDynamic(Animation, &UIronSightsEventGraph::PlayAttackAnim);
+			Animation->OnAttackAnimationEnded.AddDynamic(CurrentWeapon, &ABaseRifle::AnimationEnded);
+
+			Health->OnDamage.AddDynamic(Animation, &UIronSightsEventGraph::PlayHurtAnim);
+			Health->OnDeath.AddDynamic(this, &ABaseCharacter::CharacterDeath);
 		}
 		else
 			UE_LOG(Game, Error, TEXT("Could not cast to UIronSightsAnimation | BaseCharacter, BeginPlay()"));
 	}
 	else
 		UE_LOG(Game, Error, TEXT("Could not cast to ABaseRifle | BaseCharacter, BeginPlay()"));
+}
+
+void ABaseCharacter::CharacterDeath(float Percent)
+{
+	CurrentWeapon->OwnerDied();
+
+	Animation->PlayDeathAnim(0);
+
+	GetController()->StopMovement();
 }
 

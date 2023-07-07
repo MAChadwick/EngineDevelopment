@@ -22,6 +22,8 @@ public:
 	// Sets default values for this actor's properties
 	ABaseRifle();
 
+	bool IsDead;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -56,5 +58,8 @@ public:
 
 	// Function for OnAnimationEnded delegate
 	UFUNCTION()
-		void AnimationEnded(UAnimMontage* montage, bool interrupted);
+		void AnimationEnded();
+
+	UFUNCTION()
+		void OwnerDied();
 };
