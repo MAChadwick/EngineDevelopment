@@ -26,6 +26,6 @@ public:
 	UHUGBase(const FObjectInitializer& ObjectInitializer);
 	bool Initialize() override;
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 		void SetPlayerHealth(float percent);
 };
