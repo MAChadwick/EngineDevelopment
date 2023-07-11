@@ -8,6 +8,7 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDamageVariable, float, percent);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDeathVariable, float, percent);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealVariable, float, percent);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class A06_END_API UHealthComponent : public UActorComponent
@@ -32,9 +33,16 @@ public:
 	UFUNCTION()
 		void HandleDamage(AActor* damagedActor, float damage, const UDamageType* damageType, AController* instigator, AActor* damageCauser);
 
+	UFUNCTION()
+		bool IsFullHealth();
+
+	// Delegate Variables
 	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Variable | Dispatcher")
 		FOnDamageVariable OnDamage;
 
 	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Variable | Dispatcher")
 		FOnDeathVariable OnDeath;
+
+	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Variable | Dispatcher")
+		FOnHealVariable OnHeal;
 };

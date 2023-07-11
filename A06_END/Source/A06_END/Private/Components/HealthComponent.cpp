@@ -2,6 +2,7 @@
 
 
 #include "Components/HealthComponent.h"
+#include "../../A06_END.h"
 
 // Sets default values for this component's properties
 UHealthComponent::UHealthComponent()
@@ -35,6 +36,11 @@ void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	// ...
 }
 
+bool UHealthComponent::IsFullHealth()
+{
+	return (currentHealth / maxHealth) > 0.99f;
+}
+
 void UHealthComponent::HandleDamage(AActor* damagedActor, float damage, const UDamageType* damageType, AController* instigator, AActor* damageCauser)
 {
 	currentHealth -= damage;
@@ -42,7 +48,10 @@ void UHealthComponent::HandleDamage(AActor* damagedActor, float damage, const UD
 
 	if (currentHealth > 0)
 	{
-		OnDamage.Broadcast(currentHealth / maxHealth);
+		if (damage > 0)
+			OnDamage.Broadcast(currentHealth / maxHealth);
+		else
+			OnHeal.Broadcast(currentHealth / maxHealth);
 	}
 	else
 	{

@@ -13,5 +13,21 @@ UCLASS()
 class A06_END_API APickupHealth : public APickupDamage
 {
 	GENERATED_BODY()
-	
+
+public:
+	APickupHealth();
+
+protected:
+	virtual void BeginPlay() override;
+
+	virtual void HandlePostPickup() override;
+	virtual void HandleNoPickup() override;
+
+public:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+		USoundBase* FullHealthSound;
+
+	virtual bool CanPickup(AActor* OtherActor) const override;
+
+	virtual bool ShouldPickup(AActor* OtherActor) const override;
 };

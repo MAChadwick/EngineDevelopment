@@ -6,6 +6,8 @@
 #include "Blueprint/UserWidget.h"
 #include "HUGBase.generated.h"
 
+// I accidentally misnamed this class and I haven't bothered to go back and fix it
+// Its a little too late now to be honest
 /**
  * 
  */

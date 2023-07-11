@@ -13,5 +13,18 @@ UCLASS()
 class A06_END_API APickupDamage : public APickupBase
 {
 	GENERATED_BODY()
-	
+
+public:
+	APickupDamage();
+
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		float BaseDamage;
+
+	virtual void HandlePickup(AActor* OtherActor, const FHitResult& SweepResult) override;
+	virtual void HandlePostPickup() override;
+public:
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+		UParticleSystemComponent* ParticleSystem;
 };

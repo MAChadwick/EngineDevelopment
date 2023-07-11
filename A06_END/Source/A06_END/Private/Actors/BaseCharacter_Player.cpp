@@ -63,6 +63,7 @@ void ABaseCharacter_Player::SetupHud()
 
 		Health->OnDamage.AddDynamic(HudWidget, &UHUGBase::SetPlayerHealth);
 		Health->OnDeath.AddDynamic(HudWidget, &UHUGBase::SetPlayerHealth);
+		Health->OnHeal.AddDynamic(HudWidget, &UHUGBase::SetPlayerHealth);
 	}
 	else
 		UE_LOG(Game, Error, TEXT("Could not cast to APlayer Controller | BaseChaaracter.cpp, SetupHud"));
@@ -79,4 +80,14 @@ void ABaseCharacter_Player::CharacterDeath(float Percent)
 	SetActorEnableCollision(false);
 
 	HudWidget->RemoveFromParent();
+}
+
+bool ABaseCharacter_Player::CanPickupHealth()
+{
+	return true;
+}
+
+bool ABaseCharacter_Player::ShouldPickupHealth()
+{
+	return !(Health->IsFullHealth());
 }

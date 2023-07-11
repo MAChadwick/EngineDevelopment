@@ -103,3 +103,12 @@ void ABaseCharacter::CharacterDeath(float Percent)
 	GetController()->StopMovement();
 }
 
+bool ABaseCharacter::CanPickupHealth()
+{
+	return false;
+}
+
+bool ABaseCharacter::ShouldPickupHealth()
+{
+	return false;
+}

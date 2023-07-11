@@ -32,8 +32,12 @@ public:
 	ABaseCharacter_Player();
 	void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	
 	virtual void CharacterDeath(float Percent) override;
+
+	// Begin IPickupsInterface
+	virtual bool CanPickupHealth() override;
+	virtual bool ShouldPickupHealth() override;
+	// End IPickupsInterface
 
 private:
 	void MoveForwardBackward(float AxisValue);

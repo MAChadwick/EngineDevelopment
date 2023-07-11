@@ -6,10 +6,11 @@
 #include "GameFramework/Character.h"
 #include "Core/IronSightsEventGraph.h"
 #include "Components/HealthComponent.h"
+#include "PickupsInterface.h"
 #include "BaseCharacter.generated.h"
 
 UCLASS(Abstract)
-class A06_END_API ABaseCharacter : public ACharacter
+class A06_END_API ABaseCharacter : public ACharacter, public IPickupsInterface
 {
 	GENERATED_BODY()
 
@@ -44,6 +45,11 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	// Begin IPickupsInterface
+	virtual bool CanPickupHealth() override;
+	virtual bool ShouldPickupHealth() override;
+	// End IPickupsInterface
 
 	UFUNCTION()
 		void CharacterAttack();
