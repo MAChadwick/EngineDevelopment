@@ -59,6 +59,7 @@ void ABaseCharacter_Player::SetupHud()
 	if (nullptr != playerController)
 	{
 		//UHUGBase* NewHud = CreateWidget<UHUGBase>(playerController, WidgetClass);
+		HudWidget->SetOwningPlayer(playerController);
 		HudWidget->AddToViewport();
 
 		Health->OnDamage.AddDynamic(HudWidget, &UHUGBase::SetPlayerHealth);

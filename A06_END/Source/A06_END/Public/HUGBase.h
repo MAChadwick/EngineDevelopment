@@ -16,14 +16,39 @@ class A06_END_API UHUGBase : public UUserWidget
 {
 	GENERATED_BODY()
 	
+private:
+	void SetColor(FLinearColor newColor);
+	void ChangeCrosshair();
+	
+
+
 protected:
 	virtual void NativeConstruct() override;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		UMaterialInstanceDynamic* DynamicMaterial;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		FName ColorName = "Color";
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		FLinearColor DangerColor = FLinearColor(0.7f, 0, 0, 1);
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		FLinearColor SafeColor = FLinearColor(0.25f, 0.75f, 0.75f, 1);
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		FVector EndPoint;
 
 	UPROPERTY(BlueprintReadWrite, meta=(BindWidget))
 		class UProgressBar* HealthBar;
 
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+		class UImage* Crosshair;
+
 public:
 	UHUGBase(const FObjectInitializer& ObjectInitializer);
+	virtual void NativeTick(const FGeometry& MyGeometry, float DeltaTime) override;
 	bool Initialize() override;
 
 	UFUNCTION(BlueprintCallable)
