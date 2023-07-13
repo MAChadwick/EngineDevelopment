@@ -11,6 +11,15 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDelegateVariable, AActor*, Object);
 
+// Allows it to be used in a blueprint
+UENUM(BlueprintType)
+enum class EBindEnum : uint8
+{
+	BIND_EARTH		UMETA(DisplayName = "Earth"),
+	BIND_WIND		UMETA(DisplayName = "WIND"),
+	BIND_FIRE		UMETA(DisplayName = "FIRE")
+};
+
 UCLASS()
 class A06_END_API ABindVariables : public AActor
 {
@@ -91,4 +100,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Variable | Array")
 		TArray<UObject*> ObjectArray;
+	
+	// Enum
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Variable|Enum")
+		EBindEnum EnumValue;
 };

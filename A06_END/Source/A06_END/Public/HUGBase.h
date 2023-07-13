@@ -53,4 +53,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void SetPlayerHealth(float percent);
+
+	UFUNCTION(BlueprintCallable)
+		FVector GetEndPoint();
 };

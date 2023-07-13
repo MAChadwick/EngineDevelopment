@@ -52,8 +52,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void PlayAttackAnim();
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 		void PlayHurtAnim(float Percent);
+	virtual void PlayHurtAnim_Implementation(float Percent);
 
 	UFUNCTION(BlueprintCallable)
 		void PlayDeathAnim(float Percent);

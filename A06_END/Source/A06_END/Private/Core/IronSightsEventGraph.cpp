@@ -39,7 +39,7 @@ void UIronSightsEventGraph::PlayAttackAnim()
 	GetWorld()->GetTimerManager().SetTimer(AttackTimerHandle, this, &UIronSightsEventGraph::AttackAnimationEnded, AttackAnim->GetPlayLength());
 }
 
-void UIronSightsEventGraph::PlayHurtAnim(float Percent)
+void UIronSightsEventGraph::PlayHurtAnim_Implementation(float Percent)
 {
 	PlaySlotAnimationAsDynamicMontage(HurtAnim, FName("Action"), 0.25f, 0.25f, 1.0f, 1);
 }

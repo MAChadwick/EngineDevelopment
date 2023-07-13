@@ -62,4 +62,7 @@ public:
 
 	UFUNCTION()
 		void OwnerDied();
+
+	UFUNCTION()
+		FVector GetFirePoint();
 };

@@ -110,3 +110,8 @@ void UHUGBase::SetColor(FLinearColor newColor)
 {
 	DynamicMaterial->SetVectorParameterValue(ColorName, newColor);
 }
+
+FVector UHUGBase::GetEndPoint()
+{
+	return EndPoint;
+}

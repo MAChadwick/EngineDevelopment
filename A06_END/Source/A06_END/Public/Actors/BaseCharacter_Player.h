@@ -34,6 +34,8 @@ public:
 
 	virtual void CharacterDeath(float Percent) override;
 
+	virtual FRotator GetBaseAimRotation() const override;
+
 	// Begin IPickupsInterface
 	virtual bool CanPickupHealth() override;
 	virtual bool ShouldPickupHealth() override;

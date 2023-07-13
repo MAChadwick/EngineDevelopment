@@ -53,7 +53,7 @@ void ABaseRifle::Attack()
 	if (!Animate && !IsDead)
 	{
 		Animate = true;
-		FVector SpawnLocation = SkeletalMesh->GetSocketLocation(FName("MuzzleFlashSocket"));
+		FVector SpawnLocation = GetFirePoint();
 		FRotator AimRotation = ParentPawn->GetBaseAimRotation();
 		FActorSpawnParameters SpawnInfo;
 		SpawnInfo.Owner = ParentPawn->GetController();
@@ -73,4 +73,9 @@ void ABaseRifle::AnimationEnded()
 void ABaseRifle::OwnerDied()
 {
 	IsDead = true;
+}
+
+FVector ABaseRifle::GetFirePoint()
+{
+	return SkeletalMesh->GetSocketLocation(FName("MuzzleFlashSocket"));
 }

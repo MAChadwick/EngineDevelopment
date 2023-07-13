@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "HUGBase.h"
 #include <Kismet/KismetMathLibrary.h>
+#include "Actors/BaseRifle.h"
 #include "../../A06_END.h"
 
 ABaseCharacter_Player::ABaseCharacter_Player() {
@@ -91,4 +92,9 @@ bool ABaseCharacter_Player::CanPickupHealth()
 bool ABaseCharacter_Player::ShouldPickupHealth()
 {
 	return !(Health->IsFullHealth());
+}
+
+FRotator ABaseCharacter_Player::GetBaseAimRotation() const
+{
+	return UKismetMathLibrary::MakeRotFromX(HudWidget->GetEndPoint() - CurrentWeapon->GetFirePoint());
 }

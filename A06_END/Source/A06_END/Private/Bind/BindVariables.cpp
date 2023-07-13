@@ -15,6 +15,9 @@ ABindVariables::ABindVariables()
 
 	// Add to an array
 	ValueArray.Add(3);
+
+	// Set enum value to something
+	EnumValue = EBindEnum::BIND_EARTH;
 }
 
 // Called when the game starts or when spawned
