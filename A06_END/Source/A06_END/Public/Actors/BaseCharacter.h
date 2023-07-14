@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Core/IronSightsEventGraph.h"
 #include "Components/HealthComponent.h"
+#include "Components/EffectComponent.h"
 #include "PickupsInterface.h"
 #include "BaseCharacter.generated.h"
 
@@ -34,6 +35,9 @@ protected:
 
 	UPROPERTY()
 		UHealthComponent* Health;
+
+	UPROPERTY()
+		UEffectComponent* Effect;
 
 private:
 	// Helper functions for initializing values

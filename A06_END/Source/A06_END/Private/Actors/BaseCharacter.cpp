@@ -20,13 +20,15 @@ ABaseCharacter::ABaseCharacter()
 
 	USkeletalMeshComponent* SkeleMesh = GetMesh();
 
-	WeaponChildActorComponent->SetupAttachment(SkeleMesh);
-
 	// Gets the mesh of the the character and sets the location relative to the parent class (World in this case)
 	GetMesh()->SetRelativeLocation(FVector(0.0f, 0.0f, -90.0f));
 	GetMesh()->SetRelativeRotation(FRotator(0, -90.0f, 0));
 
 	Health = CreateDefaultSubobject<UHealthComponent>(TEXT("Health"));
+	Effect = CreateDefaultSubobject<UEffectComponent>(TEXT("Effect"));
+
+	WeaponChildActorComponent->SetupAttachment(SkeleMesh);
+	Effect->SetupAttachment(SkeleMesh);
 }
 
 // Called when the game starts or when spawned

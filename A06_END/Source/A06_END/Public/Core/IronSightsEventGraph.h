@@ -45,6 +45,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		UAnimSequence* CurrentDeath;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		FName SlotName;
+
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintAssignable)
 		FOnAttackAnimationEnded OnAttackAnimationEnded;

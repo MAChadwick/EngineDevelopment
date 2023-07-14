@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Actors/PickupBase.h"
+#include "Utility/BurningDamageType.h"
 #include "PickupDamage.generated.h"
 
 /**
@@ -27,4 +28,7 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 		UParticleSystemComponent* ParticleSystem;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+		TSubclassOf<class UDamageType> DamageTypeClass;
 };

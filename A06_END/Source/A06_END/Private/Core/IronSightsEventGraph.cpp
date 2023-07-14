@@ -10,6 +10,8 @@
 
 void UIronSightsEventGraph::NativeUpdateAnimation(float DeltaSeconds)
 {
+	SlotName = FName("Action");
+
 	Super::NativeUpdateAnimation(DeltaSeconds);
 
 	APawn* Owner = TryGetPawnOwner();
@@ -34,20 +36,21 @@ void UIronSightsEventGraph::NativeUpdateAnimation(float DeltaSeconds)
 
 void UIronSightsEventGraph::PlayAttackAnim()
 {
-	PlaySlotAnimationAsDynamicMontage(AttackAnim, FName("Action"), 0.25f, 0.25f, 1.0f, 1);
+	PlaySlotAnimationAsDynamicMontage(AttackAnim, SlotName, 0.25f, 0.25f, 1.0f, 1);
 
 	GetWorld()->GetTimerManager().SetTimer(AttackTimerHandle, this, &UIronSightsEventGraph::AttackAnimationEnded, AttackAnim->GetPlayLength());
 }
 
 void UIronSightsEventGraph::PlayHurtAnim_Implementation(float Percent)
 {
-	PlaySlotAnimationAsDynamicMontage(HurtAnim, FName("Action"), 0.25f, 0.25f, 1.0f, 1);
+	if (!IsPlayingSlotAnimation(HurtAnim, SlotName))
+		PlaySlotAnimationAsDynamicMontage(HurtAnim, SlotName, 0.25f, 0.25f, 1.0f, 1);
 }
 
 void UIronSightsEventGraph::PlayDeathAnim(float Percent)
 {
 	CurrentDeath = DeathAnims[FMath::RandRange(0, DeathAnims.Num() - 1)];
-	PlaySlotAnimationAsDynamicMontage(CurrentDeath, FName("Action"), 0.25f, 0.25f, 1.0f, 1);
+	PlaySlotAnimationAsDynamicMontage(CurrentDeath, SlotName, 0.25f, 0.25f, 1.0f, 1);
 }
 
 void UIronSightsEventGraph::AttackAnimationEnded()
