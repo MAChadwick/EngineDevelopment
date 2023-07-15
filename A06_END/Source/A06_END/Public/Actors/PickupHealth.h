@@ -20,6 +20,7 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
+	virtual void HandlePickup(AActor* OtherActor, const FHitResult& SweepResult) override;
 	virtual void HandlePostPickup() override;
 	virtual void HandleNoPickup() override;
 

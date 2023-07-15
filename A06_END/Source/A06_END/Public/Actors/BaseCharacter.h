@@ -36,7 +36,7 @@ protected:
 	UPROPERTY()
 		UHealthComponent* Health;
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		UEffectComponent* Effect;
 
 private:

@@ -20,7 +20,7 @@ class A06_END_API IEffectsInterface
 {
 	GENERATED_BODY()
 
-	UFUNCTION(BlueprintCallable)
-	virtual void StartEffect(AActor* DamagedActor, AActor* DamageCauser) = 0;
 public:
+	UFUNCTION(BlueprintCallable)
+		virtual void StartEffect(AActor* DamagedActor, AActor* DamageCauser) const = 0 ;
 };

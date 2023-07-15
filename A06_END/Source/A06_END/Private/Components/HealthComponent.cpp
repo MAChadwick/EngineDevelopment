@@ -2,6 +2,7 @@
 
 
 #include "Components/HealthComponent.h"
+#include "EffectsInterface.h"
 #include "../../A06_END.h"
 
 // Sets default values for this component's properties
@@ -46,6 +47,11 @@ void UHealthComponent::HandleDamage(AActor* damagedActor, float damage, const UD
 	currentHealth -= damage;
 	currentHealth = FMath::Clamp(currentHealth, 0.0f, maxHealth);
 
+	const IEffectsInterface* interface = Cast<IEffectsInterface>(damageType);
+
+	if (nullptr != interface)
+		interface->StartEffect(damagedActor, damageCauser);
+	
 	if (currentHealth > 0)
 	{
 		if (damage > 0)
@@ -58,6 +64,6 @@ void UHealthComponent::HandleDamage(AActor* damagedActor, float damage, const UD
 		GetOwner()->OnTakeAnyDamage.RemoveDynamic(this, &UHealthComponent::HandleDamage);
 		OnDeath.Broadcast(0);
 	}
-
+	
 }
 

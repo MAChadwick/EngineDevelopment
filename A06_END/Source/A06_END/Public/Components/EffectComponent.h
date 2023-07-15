@@ -30,8 +30,8 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	// Class reference
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-		class ABurningEffect* BurningEffect;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Burning Effect")
+		TSubclassOf<class AActor> BurningEffect;
 
 	UFUNCTION()
 		void StartEffect(EEffects effect, AActor* DamageCauser);

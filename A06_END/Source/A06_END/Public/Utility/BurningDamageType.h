@@ -21,6 +21,6 @@ public:
 		TSubclassOf<class UEffectComponent> EffectComponentClass;
 
 	// Start IEffectsInterface
-	virtual void StartEffect(AActor* DamagedActor, AActor* DamageCauser) override;
+	virtual void StartEffect(AActor* DamagedActor, AActor* DamageCauser) const override;
 	// End IEffectsInterface
 };

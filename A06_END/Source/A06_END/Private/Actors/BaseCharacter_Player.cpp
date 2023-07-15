@@ -15,7 +15,7 @@ ABaseCharacter_Player::ABaseCharacter_Player() {
 	SpringArmComponent->bUsePawnControlRotation = true;
 	SpringArmComponent->TargetArmLength = 300.0f;
 
-	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("Camer"));
+	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	CameraComponent->SetupAttachment(SpringArmComponent);
 
 	SpringArmComponent->SetRelativeLocation(FVector(0.0f, 80.f, 90.f));

@@ -8,6 +8,7 @@
 #include "Core/IronSightsEventGraph.h"
 #include "GameFramework/PlayerController.h"
 #include "Components/HealthComponent.h"
+#include "Components/EffectComponent.h"
 #include "../../A06_END.h"
 
 // Sets default values

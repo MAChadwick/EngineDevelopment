@@ -28,5 +28,5 @@ void APickupDamage::HandlePostPickup()
 
 void APickupDamage::HandlePickup(AActor* OtherActor, const FHitResult& SweepResult)
 {
-	UGameplayStatics::ApplyDamage(OtherActor, BaseDamage, this->GetInstigatorController(), this, DamageTypeClass);
+	UGameplayStatics::ApplyDamage(OtherActor, BaseDamage, this->GetInstigatorController(), this, UBurningDamageType::StaticClass());
 }

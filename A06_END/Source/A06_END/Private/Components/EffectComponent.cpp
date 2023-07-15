@@ -1,16 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "Components/EffectComponent.h"
 #include "Utility/Enums.h"
 #include "Actors/BurningEffect.h"
 #include "../../A06_END.h"
-#include "Components/EffectComponent.h"
 
 // Sets default values for this component's properties
 UEffectComponent::UEffectComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 
 	// ...
 }
@@ -53,7 +53,7 @@ void UEffectComponent::StartBurning(AActor* DamageCauser)
 	params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::Undefined;
 	params.Owner = DamageCauser;
 
-	AActor* BurningEffectActor = GetWorld()->SpawnActor(BurningEffect->StaticClass(), &GetComponentTransform(), params);
+	AActor* BurningEffectActor = GetWorld()->SpawnActor<ABurningEffect>(GetComponentLocation(), GetComponentRotation(), params);
 
 	if (nullptr != BurningEffectActor)
 	{

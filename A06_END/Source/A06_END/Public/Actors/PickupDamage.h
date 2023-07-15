@@ -30,5 +30,5 @@ public:
 		UParticleSystemComponent* ParticleSystem;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-		TSubclassOf<class UDamageType> DamageTypeClass;
+		TSubclassOf<class UBurningDamageType> DamageTypeClass;
 };

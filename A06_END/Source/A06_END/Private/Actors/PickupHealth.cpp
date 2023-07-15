@@ -19,8 +19,16 @@ APickupHealth::APickupHealth()
 
 void APickupHealth::BeginPlay()
 {
+	Super::BeginPlay();
+
 	// I set this here because it wasn't wanting to set in the constructor for some reason
 	BaseDamage = -2.0f;
+	DamageTypeClass = TSubclassOf<class UDamageType>();
+}
+
+void APickupHealth::HandlePickup(AActor* OtherActor, const FHitResult& SweepResult)
+{
+	UGameplayStatics::ApplyDamage(OtherActor, BaseDamage, this->GetInstigatorController(), this, UDamageType::StaticClass());
 }
 
 void APickupHealth::HandlePostPickup()
