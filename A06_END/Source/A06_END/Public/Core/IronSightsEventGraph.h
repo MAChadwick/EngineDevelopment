@@ -11,26 +11,27 @@
  */
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAttackAnimationEnded);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnReloadEnded);
 
 UCLASS()
 class A06_END_API UIronSightsEventGraph : public UAnimInstance
 {
 	GENERATED_BODY()
 
-private:
-	FTimerHandle AttackTimerHandle;
-
 public:
 	void NativeUpdateAnimation(float deltaSeconds) override;
 
 protected:
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-		FTimerHandle AnimateTimerHandle;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		FTimerHandle AttackTimerHandle;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		FTimerHandle ReloadAnimHandle;
 	
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		float Speed;
 	
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		float Direction;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
@@ -38,6 +39,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 		class UAnimSequence* HurtAnim;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+		class UAnimSequence* ReloadAnim;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 		TArray<class UAnimSequence*> DeathAnims;
@@ -52,6 +56,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintAssignable)
 		FOnAttackAnimationEnded OnAttackAnimationEnded;
 
+	UPROPERTY(VisibleAnywhere, BlueprintAssignable)
+		FOnReloadEnded OnReloadAnimationEnded;
+
 	UFUNCTION(BlueprintCallable)
 		void PlayAttackAnim();
 
@@ -62,6 +69,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void PlayDeathAnim(float Percent);
 
+	UFUNCTION(BlueprintCallable)
+		void PlayReloadAnim();
+
 	UFUNCTION()
 		void AttackAnimationEnded();
+
+	UFUNCTION()
+		void ReloadAnimationEnded();
 };

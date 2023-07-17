@@ -59,5 +59,8 @@ public:
 		void CharacterAttack();
 
 	UFUNCTION()
+		void WeaponReload();
+
+	UFUNCTION()
 		virtual void CharacterDeath(float Percent);
 };

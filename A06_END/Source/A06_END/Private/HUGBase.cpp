@@ -6,6 +6,7 @@
 #include "Components/CanvasPanelSlot.h"
 #include "Components/ProgressBar.h"
 #include "Components/Image.h"
+#include "Components/TextBlock.h"
 #include "Blueprint/SlateBlueprintLibrary.h"
 #include "Engine/EngineTypes.h"
 #include "Materials/MaterialInstanceDynamic.h"
@@ -114,4 +115,10 @@ void UHUGBase::SetColor(FLinearColor newColor)
 FVector UHUGBase::GetEndPoint()
 {
 	return EndPoint;
+}
+
+void UHUGBase::SetAmmo(float Current, float Max)
+{
+	CurrentAmmo->SetText(FText::AsNumber(Current));
+	MaxAmmo->SetText(FText::AsNumber(Max));
 }

@@ -83,10 +83,15 @@ void ABaseCharacter::SetupCharacter()
 		// Check if cast was successful
 		if (nullptr != Animation)
 		{
-			// Bind Play Animation function to OnShot from weapon
+			// Bind Play Animation function to OnShot and OnReloadStart from weapon 
 			CurrentWeapon->OnShot.AddDynamic(Animation, &UIronSightsEventGraph::PlayAttackAnim);
-			Animation->OnAttackAnimationEnded.AddDynamic(CurrentWeapon, &ABaseRifle::AnimationEnded);
+			CurrentWeapon->OnReloadStart.AddDynamic(Animation, &UIronSightsEventGraph::PlayReloadAnim);
 
+			// Bind animation events for attack anim and reload
+			Animation->OnAttackAnimationEnded.AddDynamic(CurrentWeapon, &ABaseRifle::AnimationEnded);
+			Animation->OnReloadAnimationEnded.AddDynamic(CurrentWeapon, &ABaseRifle::Reload);
+
+			// Bind health events for hurt and death
 			Health->OnDamage.AddDynamic(Animation, &UIronSightsEventGraph::PlayHurtAnim);
 			Health->OnDeath.AddDynamic(this, &ABaseCharacter::CharacterDeath);
 		}
@@ -104,6 +109,7 @@ void ABaseCharacter::CharacterDeath(float Percent)
 	Animation->PlayDeathAnim(0);
 
 	GetController()->StopMovement();
+	SetActorEnableCollision(false);
 }
 
 bool ABaseCharacter::CanPickupHealth()
@@ -114,4 +120,9 @@ bool ABaseCharacter::CanPickupHealth()
 bool ABaseCharacter::ShouldPickupHealth()
 {
 	return false;
+}
+
+void ABaseCharacter::WeaponReload()
+{
+	CurrentWeapon->RequestReload();
 }

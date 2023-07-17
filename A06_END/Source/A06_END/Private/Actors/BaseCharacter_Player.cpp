@@ -26,6 +26,10 @@ void ABaseCharacter_Player::BeginPlay()
 	Super::BeginPlay();
 
 	SetupHud();
+
+	CurrentWeapon->OnAmmoChanged.AddDynamic(HudWidget, &UHUGBase::SetAmmo);
+
+	CurrentWeapon->Reload();
 }
 
 void ABaseCharacter_Player::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
@@ -39,6 +43,7 @@ void ABaseCharacter_Player::SetupPlayerInputComponent(class UInputComponent* Pla
 	PlayerInputComponent->BindAxis(FName("MoveForwardBackward"), this, &ABaseCharacter_Player::MoveForwardBackward);
 	PlayerInputComponent->BindAxis(FName("MoveLeftRight"), this, &ABaseCharacter_Player::MoveLeftRight);
 	PlayerInputComponent->BindAction(FName("StandardAttack"), EInputEvent::IE_Pressed, this, &ABaseCharacter::CharacterAttack);
+	PlayerInputComponent->BindAction(FName("Reload"), EInputEvent::IE_Pressed, this, &ABaseCharacter::WeaponReload);
 }
 
 void ABaseCharacter_Player::MoveForwardBackward(float AxisValue)
@@ -59,7 +64,6 @@ void ABaseCharacter_Player::SetupHud()
 
 	if (nullptr != playerController)
 	{
-		//UHUGBase* NewHud = CreateWidget<UHUGBase>(playerController, WidgetClass);
 		HudWidget->SetOwningPlayer(playerController);
 		HudWidget->AddToViewport();
 

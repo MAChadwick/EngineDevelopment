@@ -28,6 +28,9 @@ void ABaseRifle::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	MaxAmmo = 5;
+	CurrentAmmo = MaxAmmo;
+
 	APawn* Pawn = Cast<APawn>(GetParentActor());
 
 	// Get rifle's parent and cast to a pawn
@@ -50,7 +53,7 @@ void ABaseRifle::Tick(float DeltaTime)
 
 void ABaseRifle::Attack()
 {
-	if (!Animate && !IsDead)
+	if (!Animate && !IsDead && CurrentAmmo > 0)
 	{
 		Animate = true;
 		FVector SpawnLocation = GetFirePoint();
@@ -62,6 +65,8 @@ void ABaseRifle::Attack()
 		GetWorld()->SpawnActor<ABaseBullet>(SpawnLocation, AimRotation, SpawnInfo);
 
 		OnShot.Broadcast();
+
+		UseAmmo();
 	}
 }
 
@@ -78,4 +83,31 @@ void ABaseRifle::OwnerDied()
 FVector ABaseRifle::GetFirePoint()
 {
 	return SkeletalMesh->GetSocketLocation(FName("MuzzleFlashSocket"));
+}
+
+
+void ABaseRifle::Reload()
+{
+	CurrentAmmo = MaxAmmo;
+	OnAmmoChanged.Broadcast(CurrentAmmo, MaxAmmo);
+	AnimationEnded();
+}
+
+
+void ABaseRifle::RequestReload()
+{
+	if (!Animate)
+	{
+		Animate = true;
+		OnReloadStart.Broadcast();
+	}
+}
+
+void ABaseRifle::UseAmmo()
+{
+	CurrentAmmo--;
+
+	CurrentAmmo = FMath::Max(CurrentAmmo, 0.0f);
+	
+	OnAmmoChanged.Broadcast(CurrentAmmo, MaxAmmo);
 }

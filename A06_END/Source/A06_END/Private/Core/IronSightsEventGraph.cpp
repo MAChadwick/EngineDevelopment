@@ -53,7 +53,18 @@ void UIronSightsEventGraph::PlayDeathAnim(float Percent)
 	PlaySlotAnimationAsDynamicMontage(CurrentDeath, SlotName, 0.25f, 0.25f, 1.0f, 1);
 }
 
+void UIronSightsEventGraph::PlayReloadAnim()
+{
+	PlaySlotAnimationAsDynamicMontage(ReloadAnim, SlotName, 0.25f, 0.25f, 1.0f, 1);
+	GetWorld()->GetTimerManager().SetTimer(ReloadAnimHandle, this, &UIronSightsEventGraph::ReloadAnimationEnded, AttackAnim->GetPlayLength());
+}
+
 void UIronSightsEventGraph::AttackAnimationEnded()
 {
 	OnAttackAnimationEnded.Broadcast();
+}
+
+void UIronSightsEventGraph::ReloadAnimationEnded()
+{
+	OnReloadAnimationEnded.Broadcast();
 }

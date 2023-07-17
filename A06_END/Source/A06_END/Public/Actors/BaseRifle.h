@@ -9,6 +9,8 @@
 #include "BaseRifle.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnShotVariable);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAmmoChanged, float, Current, float, Max);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnReloadStart);
 
 UCLASS()
 class A06_END_API ABaseRifle : public AActor
@@ -37,6 +39,12 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		bool Animate;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		float CurrentAmmo;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		float MaxAmmo;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -44,6 +52,12 @@ public:
 	// Delegate variable
 	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Variable | Dispatcher")
 		FOnShotVariable OnShot;
+
+	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Variable | Dispatcher")
+		FOnAmmoChanged OnAmmoChanged;
+
+	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Variable | Dispatcher")
+		FOnReloadStart OnReloadStart;
 
 	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Variable | Dispatcher")
 		FOnMontageEndedMCDelegate OnAnimationEnded;
@@ -65,4 +79,13 @@ public:
 
 	UFUNCTION()
 		FVector GetFirePoint();
+
+	UFUNCTION()
+		void Reload();
+
+	UFUNCTION()
+		void RequestReload();
+
+	UFUNCTION()
+		void UseAmmo();
 };

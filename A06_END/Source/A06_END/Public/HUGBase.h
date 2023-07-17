@@ -46,6 +46,12 @@ protected:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 		class UImage* Crosshair;
 
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+		class UTextBlock* CurrentAmmo;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+		class UTextBlock* MaxAmmo;
+
 public:
 	UHUGBase(const FObjectInitializer& ObjectInitializer);
 	virtual void NativeTick(const FGeometry& MyGeometry, float DeltaTime) override;
@@ -56,4 +62,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		FVector GetEndPoint();
+
+	UFUNCTION(BlueprintCallable)
+		void SetAmmo(float Current, float Max);
 };
