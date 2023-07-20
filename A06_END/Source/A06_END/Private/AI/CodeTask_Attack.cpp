@@ -9,18 +9,14 @@
 
 EBTNodeResult::Type UCodeTask_Attack::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	ACodeAIController* Controller = Cast<ACodeAIController>(OwnerComp.GetAIOwner());
-	ABaseCharacter_AI* Actor = Cast<ABaseCharacter_AI>(OwnerComp.GetOwner());
+	AActor* Actor = OwnerComp.GetAIOwner()->GetPawn();
 	IEnemyInterface* Interface = Cast<IEnemyInterface>(Actor);
-
-	if (nullptr == Actor) UE_LOG(Game, Log, TEXT("ACtor Null"));
 
 	if (nullptr != Interface)
 	{
 		Interface->AIAttack();
 
 		return EBTNodeResult::Succeeded;
-		UE_LOG(Game, Log, TEXT("Cast Complete"));
 	}
 	else
 		UE_LOG(Game, Log, TEXT("Interface Null"));

@@ -3,10 +3,11 @@
 
 #include "Actors/BaseCharacter_AI.h"
 #include "Actors/BaseRifle.h"
+#include "../../A06_END.h"
 
 ABaseCharacter_AI::ABaseCharacter_AI()
 {
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 }
 
 void ABaseCharacter_AI::BeginPlay()

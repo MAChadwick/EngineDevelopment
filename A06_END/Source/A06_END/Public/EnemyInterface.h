@@ -7,7 +7,7 @@
 #include "EnemyInterface.generated.h"
 
 // This class does not need to be modified.
-UINTERFACE(MinimalAPI)
+UINTERFACE(MinimalAPI, meta = (CannotImplementInterfaceInBlueprint))
 class UEnemyInterface : public UInterface
 {
 	GENERATED_BODY()
@@ -22,5 +22,6 @@ class A06_END_API IEnemyInterface
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	virtual void AIAttack() = 0;
+	UFUNCTION(BlueprintCallable)
+		virtual void AIAttack() = 0;
 };

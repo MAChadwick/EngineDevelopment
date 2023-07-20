@@ -23,13 +23,7 @@ ABaseBullet::ABaseBullet()
 	Sphere->SetupAttachment(Collision);
 	Sphere->SetCollisionProfileName(TEXT("NoCollision"));
 	Sphere->SetRelativeScale3D(FVector(0.5f, 0.5f, 0.5f));
-
-	ConstructorHelpers::FObjectFinder<UStaticMesh>MeshAsset(TEXT("StaticMesh'/Engine/BasicShapes/Sphere.Sphere'"));
-	ConstructorHelpers::FObjectFinder<UMaterial>MaterialAsset(TEXT("Material'/Game/Art/M_FlatColor.M_FlatColor'"));
-	UStaticMesh* Asset = MeshAsset.Object;
-	Asset->SetMaterial(0, MaterialAsset.Object);
-
-	Sphere->SetStaticMesh(Asset);
+	//Sphere->SetMaterial()
 
 	// Configure collider
 	Collision->SetGenerateOverlapEvents(true);

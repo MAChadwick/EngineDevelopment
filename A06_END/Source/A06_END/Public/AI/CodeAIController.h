@@ -25,10 +25,10 @@ public:
 		FName PlayerKey;
 
 protected:
-	UPROPERTY()
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 		UAIPerceptionComponent* SightComponent;
 
-	UPROPERTY()
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 		class UAISenseConfig_Sight* SightConfig;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)

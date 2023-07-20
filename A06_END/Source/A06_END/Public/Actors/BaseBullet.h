@@ -32,6 +32,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		class UProjectileMovementComponent* ProjectileMovement;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+		UMaterialInterface* Asset;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

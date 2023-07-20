@@ -17,9 +17,6 @@ class A06_END_API UTask_FindPoint : public UBTTask_BlackboardBase
 public:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 		float Radius;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-		UBlackboardComponent* Blackboard;
 };

@@ -17,7 +17,4 @@ class A06_END_API UCodeTask_Attack : public UBTTask_BlackboardBase
 
 public:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
-
-	UPROPERTY(VisibleAnywhere)
-		float Test;
 };

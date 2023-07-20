@@ -15,8 +15,8 @@
 
 UHUGBase::UHUGBase(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
-	if (nullptr == HealthBar)
-		UE_LOG(Game, Error, TEXT("No HealthBar Set | HUGBASE.cpp, Constructor"));
+	//if (nullptr == HealthBar)
+		//UE_LOG(Game, Error, TEXT("No HealthBar Set | HUGBASE.cpp, Constructor"));
 }
 
 bool UHUGBase::Initialize()
